@@ -49,12 +49,20 @@ function reverseString(str){
 
  function avgLenOfVals(dict){
    var total = 0
+   var count = 0 
+
+   if (Object.keys(dict).length == 0) {
+       return 0
+   }
+
    for (var key in dict) {
     process = dict[key].toString()
     total += process.length
+    count += 1
+    console.log(count)
    }
 
-   return total 
+   return (total/count)
  }
 
 /*
@@ -70,8 +78,26 @@ function reverseString(str){
  */
 
 function applyFunToArray(str, fun){
-    str.split(", ")
-    return str 
+    arr = str.replace(/\s/g,'').split(',')
+    arr = fun(arr)
+    return arr 
+}
+
+function memeFont(arr) {
+    var newArr = [] 
+    for (var i = 0; i < arr.length; i++) {
+
+        if (i % 5 == 0) {
+            newArr[i] = "_"       
+        }
+        if (i % 2 == 0) {
+            newArr[i] = arr[i].toUpperCase(); 
+        }
+    }
+
+    var newFont = newArr.join()
+
+    return newFont
 }
 
 
