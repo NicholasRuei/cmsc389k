@@ -3,6 +3,62 @@
 // (assume this is the full set of states.
 // This will make it easier to test.
 var states = ["Idaho", "South Dakota", "Hawaii", "Alaska", "Alabama", "New York"];
+var count = 20
+document.getElementById("check").disabled = true; 
+var checkMap = []
+var stateMap = { 
+  "alabama": "01",
+  "alaska": "02",
+  "arizona": "04",
+  "arkansas": "05",
+  "california": "06",
+  "colorado": "08",
+  "connecticut": "09",
+  "delaware": "10",
+  "district of columbia": "11",
+  "florida": "12",
+  "georgia": "13",
+  "hawaii": "15",
+  "idaho": "16",
+  "illinois": "17",
+  "indiana": "18",
+  "iowa": "19",
+  "kansas": "20",
+  "kentucky": "21",
+  "louisiana": "22",
+  "maine": "23",
+  "maryland": "24",
+  "massachusetts": "25",
+  "michigan": "26",
+  "minnesota": "27",
+  "mississippi": "28",
+  "missouri": "29",
+  "montana": "30",
+  "nebraska": "31",
+  "nevada": "32",
+  "new hampshire": "33",
+  "new jersey": "34",
+  "new mexico": "35",
+  "new york": "36",
+  "north carolina": "37",
+  "north dakota": "38",
+  "ohio": "39",
+  "oklahoma": "40",
+  "oregon": "41",
+  "pennsylvania": "42",
+  "rhode island": "44",
+  "south carolina": "45",
+  "south dakota": "46",
+  "tennessee": "47",
+  "texas": "48",
+  "utah": "49",
+  "vermont": "50",
+  "virginia": "51",
+  "washington": "53",
+  "west virginia": "54",
+  "wisconsin": "55",
+  "wyoming": "56"
+}
 
 // These are all the states. It maps the state name to the number which you'll
 // want to use in your API call.
@@ -61,6 +117,10 @@ var abvMap = {
 }
 
 
+
+
+
+
 /*
  * The majority of this project is done in JavaScript.
  *
@@ -76,3 +136,47 @@ var abvMap = {
  * will be different. Make sure you Google! We urge you to post in Piazza if
  * you are stuck.
  */
+
+ 
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
+function startTimer() {
+  var x = setInterval(function() {
+
+    document.getElementById("timer").innerHTML = "TIME LEFT:" + count + "s ";
+
+    if (checkMap.length == Object.keys(stateMap).length) {
+      document.getElementById("score").innerHTML = "Your score is: " + checkMap.length + "/" + Object.keys(stateMap).length
+      document.getElementById("check").disabled = true; 
+      document.getElementById("timer").innerHTML = "YOU WIN";
+      clearInterval(x)
+      count = 20
+      checkMap = []
+    }
+
+    count -= 1
+
+    // If the count down is finished, write some text
+    if (count == 0) {
+      console.log("hi")
+      document.getElementById("score").innerHTML = "Your score is: " + checkMap.length + "/" + Object.keys(stateMap).length
+      document.getElementById("check").disabled = true; 
+      count = 20
+      clearInterval(x);
+      document.getElementById("timer").innerHTML = "YOU LOSE";
+      checkMap = []
+
+      Object.keys(stateMap).forEach((state) => {
+        if (!(checkMap.includes(state.toLowerCase()))) {
+          $(missed_list).append("<br>" + toTitleCase(state))
+        }
+      })
+    }
+  }, 1000);
+}
+  
+
+

@@ -25,6 +25,18 @@
         the user hitting enter?
         3. How do I disable the input bar if the game is not in session?
     -->
+    <input type="text" id="check" name="check" value="Enter State Here:"> 
+    <button id="start_button">Start Timer: </button>
+    <h1 id = "timer" name="check">TIME LEFT:</h1>
+    <p id = "score" name="check"> </p>
+
+    <div> 
+      <p id= "state_list"> States: 
+    </div>
+
+    <div> 
+      <p id= "missed_list"> Missed States: 
+    </div>
 
     <!--
     2. Implement the running list of states.
@@ -45,12 +57,31 @@
     4. Implement the start button. The start button must activate the input box
     to allow input start the timer.
     -->
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
     <script src="index.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        console.log(abvMap);
+    <script type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
     </script>
+    <script> 
+      $("#start_button").on("click", function() {
+        startTimer(); 
+        document.getElementById("check").disabled = false;
+        document.getElementById("score").innerHTML = ""
+        document.getElementById("timer").innerHTML = "TIME LEFT: "
+        $(state_list).text("States: ")
+        $(missed_list).text("Missed States: ")
+      })
+     </script>
+     <script>
+          $('#check').on('keyup', function(){
+              var value = $('#check').val()
+              value = value.toLowerCase() 
+              if (!(value in checkMap) && value in stateMap) {
+                $(this).val('')
+                $(state_list).append("<br>" + toTitleCase(value))
+                checkMap.push(value)
+              }
+          });
+     </script>
 </body>
 
 </html>
