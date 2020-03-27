@@ -28,10 +28,12 @@
     <input type="text" id="check" name="check" value="Enter State Here:"> 
     <button id="start_button">Start Timer: </button>
     <h1 id = "timer" name="check">TIME LEFT:</h1>
+    <h3> Spanish Speakers: </h3>
+    <h4 id = "spanish"> </h4>
     <p id = "score" name="check"> </p>
 
     <div> 
-      <p id= "state_list"> States: 
+      <div id= "state_list"> States: </div>
     </div>
 
     <div> 
@@ -77,11 +79,43 @@
               value = value.toLowerCase() 
               if (!(value in checkMap) && value in stateMap) {
                 $(this).val('')
-                $(state_list).append("<br>" + toTitleCase(value))
+                g = $("<button></button>").text(toTitleCase(value))
+                g.attr("id", stateMap[value]);
+                g.attr("class", "delete");
+                $('#state_list').append(g);  
                 checkMap.push(value)
               }
           });
      </script>
-</body>
 
+      <script>
+        $('#check').on('keyup', function(){
+            var value = $('#check').val()
+            value = value.toLowerCase() 
+            if (!(value in checkMap) && value in stateMap) {
+              $(this).val('')
+              $(state_list).append("<br>" + toTitleCase(value))
+              checkMap.push(value)
+            }
+        });
+      </script>
+
+      <script>
+        $(document).on("mouseover", ".delete", function(){
+          console.log("HELLO")
+          var val = $(this).attr('id')
+              $.ajax({
+                  'type': 'GET',
+                  'url': "http://api.census.gov/data/2013/language?get=EST,LANLABEL,NAME&for=state:" + val + "&LAN=625", 
+                  'dataType': 'json',
+                  'success': function (data) {
+                      var newData = commafy(data[1][0])
+                      $("#spanish").text(newData)
+                  }
+          }, function(){
+          //This function is for unhover.
+          }); 
+        }); 
+      </script>
+  </body>
 </html>

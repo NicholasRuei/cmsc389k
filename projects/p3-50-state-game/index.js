@@ -143,6 +143,18 @@ function toTitleCase(str) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 }
+
+function commafy( num ) {
+  var str = num.toString().split('.');
+  if (str[0].length >= 5) {
+      str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+  }
+  if (str[1] && str[1].length >= 5) {
+      str[1] = str[1].replace(/(\d{3})/g, '$1 ');
+  }
+  return str.join('.');
+}
+
 function startTimer() {
   var x = setInterval(function() {
 
@@ -161,19 +173,22 @@ function startTimer() {
 
     // If the count down is finished, write some text
     if (count == 0) {
-      console.log("hi")
       document.getElementById("score").innerHTML = "Your score is: " + checkMap.length + "/" + Object.keys(stateMap).length
       document.getElementById("check").disabled = true; 
       count = 20
       clearInterval(x);
       document.getElementById("timer").innerHTML = "YOU LOSE";
-      checkMap = []
 
       Object.keys(stateMap).forEach((state) => {
         if (!(checkMap.includes(state.toLowerCase()))) {
-          $(missed_list).append("<br>" + toTitleCase(state))
+          g = $("<button></button>").text(toTitleCase(state))
+          g.attr("id", stateMap[state]);
+          g.attr("class", "delete");
+          $('#missed_list').append(g);  
         }
       })
+
+      checkMap = []
     }
   }, 1000);
 }
