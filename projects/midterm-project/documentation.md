@@ -3,11 +3,11 @@
 
 ---
 
-Name: 
+Name: Nicholas Ruei 
 
-Date: 
+Date: 4/10/2020
 
-Project Topic: 
+Project Topic: Crowdsourced clothing deal site 
 
 URL: 
 
