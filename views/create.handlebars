@@ -1,0 +1,84 @@
+<h1>Post a New Deal</h1>
+<article>
+    <form id= "deals" method="POST" action="/create">
+        <div class="input-field">
+            <label>Name:</label>
+            <input type="text" name="name" id="name" size="50" placeholder="Name...">
+        </div>
+        <div class="input-field">
+            <label>Price</label>
+            <input type="text" name="price" id="price" size="50" placeholder="Price...">
+        </div>
+         <div class="input-field">
+            <label>Tags:</label>
+            <input type="text" name="tags" id="tags" size="50" placeholder="ex. Jeans, Denim, Men">
+        </div>
+        <div class="input-field">
+            <label>Store:</label>
+            <input type="text" name="store" id="store" size="50" placeholder="Store...">
+        </div>
+        <div class="input-field">
+            <label>Location:</label>
+            <input type="text" name="location" id = "location" size="50" placeholder="ex. MD">
+        </div>
+        <div class="input-field">
+            <label>Rating:</label>
+            <input type="text" name="rating" id = "rating" size="50" placeholder="ex. 2.6">
+        </div>
+        <div class="input-field">
+            <label>Comment:</label>
+            <input type="text" name="comment" id = "comment" size="50" placeholder="ex. I loved this product!">
+        </div>
+        <button type="submit">Submit New Deal</button>
+    </form>
+
+    <br>
+        <div>
+            <h1> Real-Time Deal Posts Below... </h1>
+            <ul id="movList">
+            {{#each deals}}
+            <li>{{name}}: (Price: {{price}}) (Store:{{store}})</li>
+            {{/each}}
+        </div>
+    </ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <script> 
+         var socket = io() 
+        
+        $('#deals').submit(function(){
+        var name = $('#name').val();
+        var price = $('#price').val();
+        var tags = $('#tags').val().split(/,\s*/);
+        var store = $('#store').val();
+        var location = $('#location').val();
+        var rating = $('#rating').val();
+        var comment = $('#comment').val();
+       
+        $.ajax({
+            type: "POST",
+            url: '/create',
+            data: { 
+                        name: name,
+                        price: price,
+                        tags: tags,
+                        store: store,
+                        location: location,
+                        rating: rating,
+                        comment: comment
+                    },
+            success: function(data, status){
+                console.log(data);              
+            }
+        }); 
+        return false;
+    }); 
+
+    socket.on('new deal', function(deal) {
+        $('#movList').append($(' <li> ').text(deal.name + ": " + "(Price: " + deal.price + ") " + "(Store: " + deal.store + ")"))
+    })
+    
+    </script>
+</article>

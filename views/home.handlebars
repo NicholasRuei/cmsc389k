@@ -1,0 +1,57 @@
+<input type="text" id="myInput" onkeyup="searchBar()" placeholder="Search for names..">
+
+<ul id="myUL">
+    <div id = "empty"> </div>
+    {{#each data}}
+      {{#each this.reviews}}
+    <article id = {{this.name}}>
+        <h2 class="title">{{../name}}</h2> <i>Tags: {{../tags}}</i>
+        <hr>
+        <div class="content">
+            <h4> Price: {{../price}} </h4>
+            <h4> Store: {{../store}} </h4>
+            <h4> Rating: {{rating}} </h4>
+            <h4> Location: {{../location}} </h4> 
+            <h4> Comment: {{comment}} </h4> 
+        </div>
+    </article>
+    {{else}}
+    <article>
+        <h1>There are no deals posted yet.</h1>
+        <a href="/create">Post a deal!</a>
+    </article>
+      {{/each}}
+    {{/each}}
+</ul>
+
+<script>
+function searchBar() {
+  console.log("triggered")
+  // Declare variables
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('myInput');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myUL");
+  li = ul.getElementsByTagName('article');
+
+  var empty = true; 
+  document.getElementById("empty").innerHTML = "";
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByClassName("title")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+      empty = false 
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+  
+  if (empty == true) {
+    document.getElementById("empty").innerHTML = "No results to display.";     
+  }
+}
+ </script>
+
