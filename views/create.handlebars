@@ -11,7 +11,7 @@
         </div>
          <div class="input-field">
             <label>Tags:</label>
-            <input type="text" name="tags" id="tags" size="50" placeholder="ex. Jeans, Denim, Men">
+            <input type="text" name="tag" id="tag" size="50" placeholder="ex. Jeans, Denim, Men">
         </div>
         <div class="input-field">
             <label>Store:</label>
@@ -51,7 +51,7 @@
         $('#deals').submit(function(){
         var name = $('#name').val();
         var price = $('#price').val();
-        var tags = $('#tags').val().split(/,\s*/);
+        var tags = $('#tag').val()
         var store = $('#store').val();
         var location = $('#location').val();
         var rating = $('#rating').val();

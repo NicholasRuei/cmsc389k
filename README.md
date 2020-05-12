@@ -1,86 +1,96 @@
-# Final Project
-#### Out: 4/13/20 | Deadline: 5/12/20 11:59 PM
 
-### Overview
+# Frugal Fashion
+---
 
-In this project, you will work on a project to tie together everything you have learned up to now in the semester.
+Name: Nicholas Ruei 
 
-### Objectives
+Date: 5/11/2020
 
-The purpose of this project is to create a fully functioning **"real-time application"**.
+Project Topic: Crowdsourced clothing deal site 
 
-This project is largely open ended. The only requirement is to satisfy all parts of the `Specifications` section below, which are broad and flexible. Outside of that, you are free to be creative and make something you are proud of. You may choose to do the same topic as you did for your midterm, or choose something different.
+URL: https://nruei-cmsc389k.herokuapp.com/
 
-### Grading
+---
 
-You fill submit both the application source as well as a `documentation.md` file that documents how you implemented each part of the project.
+### 0. From Midterm: Search 
 
-Grading will be done using the `documentation.md` file to test your application.
+Search Field: `name` 
 
-Each specificiation has two types of requirements:
-- (REQ): These are requirements **must** be followed. Failue to do so can result in up to 50% point deductions for the entire project.
-- (X pt): These specifications are worth X points.
+### 1. MongoDB Schema
+
+reviewSchema
+- `Field 1`: Rating `Type: Number`
+- `Field 2`: Comment `Type: String`
+
+Deals
+- `Field 1`: Name `Type: String`
+- `Field 2`: Price `Type: Number`
+- `Field 3`: Tags `Type: [String]`
+- `Field 4`: Store `Type: String`
+- `Field 5`: Location `Type: String`
+- `Field 6`: Reviews `Type: [reviewSchema]`
 
 
-### Specifications
+Schema: 
+```javascript
+
+{
+   rating: Number,
+   comment: String
+}
 
 
-1. **Fulfillment of Midterm Project Requirements**
+{
+   name: String,
+   price: Number,
+   Tags: [String],
+   Store: String,
+   Location: String,
+   Reviews: [reviewSchema]
 
-    - (REQ) (50 pt) Data should be stored using MongoDB, instead of similar to how the Pokemon API and the blog engine was set up
-    - Have at least 2 different schemas
+}
+```
+
+### 2. Live Updates
+  Sockets are utilized in create.handlebars. As users submit input into the form, the latest posts (ordered by recency) are displayed below and live updated. 
 
 
-2. **Live Updates**
+  HTML form route: `/create`
 
-    Users will need to be able to add data to your local storage, and have live updates and a notification system.
 
-    - (10 pt) Incorporate sockets.
+### 3. View Data/Navigation Pages
 
-3. **View Data**
+Navigation Filters
+1. Choose random price over 50, display all items that meet criteria -> GET endpoint route: `/random`
+2. For Men -> GET endpoint route: `/men`
+3. For Women -> GET endpoint route: `/women`
+4. Location in Maryland ->  GET endpoint route: `/maryland`
+5. Price Lower than 50 -> GET endpoint route: `/budget`
 
-    Users should be able to view all data in two ways:
+Feedback Page: 
+GET endpoint route: `/feedback`
 
-    - (REQ) The HTML pages should be generated using Handlebars
-    - (10 pt) Handlebars.js should be used to generate at least 5 pages,
-              including a form submission page for your respective entity
-    - (5 pt) Have a (6th) description about page, which includes your name
-        and description of the application.
+About Page: 
+GET endpoint route: `/about`
 
-4. **API**
+### 4. View Data
+In addition to the 7 GET endpoints in section 3. 
 
-    Use express.js to have at least 8 different endpoints
+POST endpoint route: `/feedback`
+POST endpoint route: `/create`
 
-    - (10 pt) At least 2 post endpoints
-    - (10 pt) At least 2 delete endpoints
+DELETE endpoint route: `/deleteID/:id`
+DELETE endpoint route: `/deleteLocation/:location` 
 
-4. **Modules**
+### 5. External Module
 
-    Create at least 1 module (to separate functionality from backend API functionality)
+I created a date module, called data-util.js. In `/feedback`, I utilize it to timestamp the moment that feedback is submitted by the user. 
 
-    - (15 pt) Create at least 1 module
+### 6. NPM Packages 
 
-5. **NPM Packages**
+1. random.js (Used to generate the numbers in the `/random` page)
+2. normalize.css (Increase uniformity in CSS and to help style the search bar)
 
-    - (15 pt) Use 2 new npm packages that we have not used before
+### 7. Readme 
+Can be found at README.md
 
-6. **User Interface**
-
-    - (10 pt) Make it look nice
-
-7. **Deployment**
-
-    - (5 pt) Deploy to the web (either Heroku or Now) - If you can't figure out
-    deployment, email us and we'll figure something out
-
-8. **README**
-
-    - (5 pt) Create a README with all the specifications
-
-### Submission
-
-We will be Heroku [Heroku](http://heroku.com) to submit one link per project.
-
-At the top of your project, include the **Heroku link** (ex: https://myapp.herokuapp.com) at the top of your `documentation.md` file.
-
-Submit just the `documentation.md` file to the submit server.

@@ -55,7 +55,7 @@ app.get('/create', function(req, res) {
 
 app.get('/random', function(req, res) {
   var rand = random.int(min = 50, max = 200)
-  Deal.find({price: {$gte: 50}}, function(err, deals) {
+  Deal.find({price: {$gte: rand}}, function(err, deals) {
       return res.render('home', { deals: deals });
   });
 });
@@ -68,6 +68,9 @@ app.post('/create', function(req, res) {
   var location = req.body.location 
   var rating = req.body.rating
   var comment = req.body.comment 
+
+  console.log(tags)
+  tags = tags.toLowerCase().split(/,\s*/);
 
 
   var deal = new Deal({
